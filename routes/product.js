@@ -13,7 +13,12 @@ router.post("/", async (req, res) => {
 
 router.get("/", async (req, res) => {
   try {
-    const products = await Product.find();
+    if (req.query.search) {
+      const products = await Product.find({
+        title: { $regex: req.query.search },
+      });
+    }
+    const products = await Product.find().populate("category");
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json(err);

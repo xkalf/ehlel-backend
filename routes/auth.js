@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+const Cart = require("../models/Cart");
 
 router.post("/register", async (req, res) => {
   const salt = await bcrypt.genSalt(10);
@@ -15,6 +16,9 @@ router.post("/register", async (req, res) => {
 
   try {
     const savedUser = await newUser.save();
+    const newCart = new Cart({
+      user: savedUser._id,
+    });
     res.status(201).json(savedUser);
   } catch (error) {
     res.status(500).json(err);

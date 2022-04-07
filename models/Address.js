@@ -9,7 +9,7 @@ const AddressSchema = new mongoose.Schema({
   state: { type: String, required: true },
   postcode: { type: String, required: true },
   email: { type: String, required: true },
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 module.exports = mongoose.model("Address", AddressSchema);

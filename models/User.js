@@ -9,9 +9,15 @@ const UserSchema = new mongoose.Schema(
     phone: { type: String, required: true, unique: true },
     point: { type: Number, default: 0 },
     isAdmin: { type: Boolean, required: true },
-    addresses: { type: Array },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+UserSchema.virtual("addresses", {
+  ref: "Address",
+  localField: "_id",
+  foreignField: "user",
+  justOne: false,
+});
 
 module.exports = mongoose.model("User", UserSchema);

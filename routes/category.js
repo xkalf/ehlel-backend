@@ -1,10 +1,9 @@
 const router = require("express").Router();
 const Category = require("../models/Category");
-const Product = require("../models/Product");
 
 router.get("/", async (req, res) => {
   try {
-    const categories = await Category.find();
+    const categories = await Category.find().populate("products");
     if (!categories) res.status(500).json("Category not found");
     res.status(200).json(categories);
   } catch (err) {
@@ -13,7 +12,8 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  const category = await Product.find({ categoryId: req.params.id });
+  const { id } = req.params;
+  const category = await Category.findById(id).populate("products");
   if (!category) res.status(500).json("Category not found");
   res.status(200).json(category);
 });
@@ -21,7 +21,8 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     const newCategory = await Category.create(req.body);
-    res.status(200).json(newCategory);
+    const savedCategory = await newCategory.save();
+    res.status(200).json(savedCategory);
   } catch (err) {
     res.status(500).json(err);
   }
