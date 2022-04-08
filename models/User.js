@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema(
   {
@@ -8,16 +8,16 @@ const UserSchema = new mongoose.Schema(
     lastname: { type: String, required: true },
     phone: { type: String, required: true, unique: true },
     point: { type: Number, default: 0 },
-    isAdmin: { type: Boolean, required: true },
+    isAdmin: { type: Boolean, required: true }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
-);
+)
 
-UserSchema.virtual("addresses", {
-  ref: "Address",
-  localField: "_id",
-  foreignField: "user",
-  justOne: false,
-});
+UserSchema.virtual('addresses', {
+  ref: 'Address',
+  localField: '_id',
+  foreignField: 'user',
+  justOne: false
+})
 
-module.exports = mongoose.model("User", UserSchema);
+module.exports = mongoose.model('User', UserSchema)

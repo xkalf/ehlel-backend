@@ -1,17 +1,17 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const CategorySchema = new mongoose.Schema(
   {
-    categoryName: { type: String, required: true, unique: true },
+    categoryName: { type: String, required: true, unique: true }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
-);
+)
 
-CategorySchema.virtual("products", {
-  ref: "Product",
-  localField: "_id",
-  foreignField: "category",
-  justOne: false,
-});
+CategorySchema.virtual('products', {
+  ref: 'Product',
+  localField: '_id',
+  foreignField: 'category',
+  justOne: false
+})
 
-module.exports = mongoose.model("Category", CategorySchema);
+module.exports = mongoose.model('Category', CategorySchema)
