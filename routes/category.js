@@ -11,11 +11,15 @@ router.get('/', async (req, res) => {
   }
 })
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params
-  const category = await Category.findById(id).populate('products')
-  if (!category) res.status(500).json('Category not found')
-  res.status(200).json(category)
+router.get('/:name', async (req, res) => {
+  try {
+    const { name } = req.params
+    const category = await Category.find({ categoryName: name }).populate('products')
+    if (!category) res.status(500).json('Category not found')
+    res.status(200).json(category)
+  } catch (err) {
+    res.status(500).json(err)
+  }
 })
 
 router.post('/', async (req, res) => {

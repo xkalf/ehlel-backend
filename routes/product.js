@@ -26,6 +26,17 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/:title', async (req, res) => {
+  try {
+    const { title } = req.params
+    const product = Product.find({ title: title })
+    if (!product) res.status(500).json('Product not found')
+    res.status(200).json(product)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
 router.put('/:id', async (req, res) => {
   try {
     if (req.params.id === req.body.id) {

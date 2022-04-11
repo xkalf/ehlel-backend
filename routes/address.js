@@ -23,4 +23,24 @@ router.post('/', async (req, res) => {
   }
 })
 
+router.put('/', async (req, res) => {
+  try {
+    if (req.params.id === req.body.id) {
+      const updatedAddress = await Address.findByIdAndUpdate(
+        req.params.id,
+        {
+          $set: req.body
+        },
+
+        {
+          new: true
+        }
+      )
+      res.status(200).json(updatedAddress)
+    }
+  } catch (err) {
+    res.status(500).json(err)
+  }
+})
+
 module.exports = router
