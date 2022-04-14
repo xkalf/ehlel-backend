@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
       })
       res.status(200).json(products)
     }
-    const products = await Product.find().populate('category')
+    const products = await Product.find()
     res.status(200).json(products)
   } catch (err) {
     res.status(500).json(err)
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
 router.get('/:title', async (req, res) => {
   try {
     const { title } = req.params
-    const product = Product.find({ title: title })
+    const product = Product.findOne({ title })
     if (!product) res.status(500).json('Product not found')
     res.status(200).json(product)
   } catch (err) {

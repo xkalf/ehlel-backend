@@ -14,12 +14,10 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
   try {
     if (req.query.search) {
-      const products = await ProductMon.find({
-        title: { $regex: req.query.search }
-      })
+      const products = await ProductMon.find({ title: { $regex: req.query.search } })
       res.status(200).json(products)
     }
-    const products = await ProductMon.find().populate('category')
+    const products = await ProductMon.find()
     res.status(200).json(products)
   } catch (err) {
     res.status(500).json(err)
@@ -29,7 +27,7 @@ router.get('/', async (req, res) => {
 router.get('/:title', async (req, res) => {
   try {
     const { title } = req.params
-    const product = ProductMon.find({ title: title })
+    const product = ProductMon.find({ title })
     if (!product) res.status(500).json('ProductMon not found')
     res.status(200).json(product)
   } catch (err) {

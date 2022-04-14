@@ -8,10 +8,9 @@ const ProductSchema = new mongoose.Schema(
       ref: 'Category',
       required: true
     },
-    priceMNT: { type: Number, required: true },
     priceUSD: { type: Number, required: true },
     features: { type: String, required: true },
-    description: { type: String, required: true },
+    description: [{ type: String }],
     quantity: { type: Number, default: 0 },
     photos: [{
       type: String
