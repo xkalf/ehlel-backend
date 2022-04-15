@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const dotenv = require('dotenv')
+const cors = require('cors')
 const AuthRoute = require('./routes/auth')
 const ProductRoute = require('./routes/product')
 const CategoryRoute = require('./routes/category')
@@ -15,6 +16,7 @@ mongoose
   .catch((err) => console.log(err))
 
 app.use(express.json())
+app.use(cors())
 app.use('/api/auth', AuthRoute)
 app.use('/api/product', ProductRoute)
 app.use('/api/productmon', ProductMonRoute)

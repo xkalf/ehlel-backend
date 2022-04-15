@@ -18,9 +18,11 @@ router.get('/', async (req, res) => {
         title: { $regex: req.query.search }
       })
       res.status(200).json(products)
+    } else {
+      const products = await Product.find().populate('category')
+      if (!products) res.status(300).json('products not found')
+      res.status(200).json(products)
     }
-    const products = await Product.find()
-    res.status(200).json(products)
   } catch (err) {
     res.status(500).json(err)
   }
