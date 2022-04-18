@@ -19,7 +19,11 @@ router.get('/', async (req, res) => {
       })
       res.status(200).json(products)
     } else {
-      const products = await Product.find().populate('category')
+      const select = req.query.select
+      delete req.query.select
+      const sort = req.query.sort
+      delete req.query.sort
+      const products = await Product.find(req.query, select).sort(sort).populate('category')
       if (!products) res.status(300).json('products not found')
       res.status(200).json(products)
     }
