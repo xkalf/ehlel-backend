@@ -20,7 +20,8 @@ router.post('/register', async (req, res) => {
       user: savedUser._id
     })
     newCart.save()
-    res.status(201).json(savedUser)
+    const { password, ...others } = savedUser._doc
+    res.status(201).json(others)
   } catch (err) {
     res.status(500).json(err)
   }
