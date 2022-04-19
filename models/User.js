@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema(
     lastname: { type: String, required: true },
     phone: { type: String, required: true, unique: true },
     point: { type: Number, default: 0 },
-    isAdmin: { type: Boolean, required: true }
+    isAdmin: { type: Boolean, default: false }
   },
   { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 )
