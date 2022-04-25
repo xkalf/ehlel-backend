@@ -17,9 +17,9 @@ const register = async (req, res) => {
       user: newUser._id
     }).save()
     const { password, ...others } = newCart._doc
-    res.status(200).json(others)
+    return res.status(200).json(others)
   } catch (err) {
-    res.status(500).json(err)
+    return res.status(500).json(err)
   }
 }
 

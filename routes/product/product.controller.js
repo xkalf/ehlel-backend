@@ -41,7 +41,7 @@ const getProductByTitle = async (req, res) => {
   }
 }
 
-const updatedProduct = async (req, res) => {
+const updateProduct = async (req, res) => {
   try {
     const { id } = req.params
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -74,6 +74,6 @@ module.exports = {
   createProduct,
   getProduct,
   getProductByTitle,
-  updatedProduct,
+  updateProduct,
   deleteProduct
 }
