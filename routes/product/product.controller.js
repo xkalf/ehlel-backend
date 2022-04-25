@@ -1,17 +1,15 @@
-const router = require('express').Router()
-const Product = require('../models/Product')
+const Product = require('../../models/product.model')
 
-router.post('/', async (req, res) => {
+const createProduct = async (req, res) => {
   try {
-    const newProduct = new Product(req.body)
-    const savedProduct = await newProduct.save()
-    res.status(200).json(savedProduct)
+    const newProduct = new Product(req.body).save()
+    res.status(200).json(newProduct)
   } catch (err) {
     res.status(500).json(err)
   }
-})
+}
 
-router.get('/', async (req, res) => {
+const getProduct = async (req, res) => {
   try {
     if (req.query.search) {
       const products = await Product.find({
@@ -20,8 +18,8 @@ router.get('/', async (req, res) => {
       res.status(200).json(products)
     } else {
       const select = req.query.select
-      delete req.query.select
       const sort = req.query.sort
+      delete req.query.select
       delete req.query.sort
       const products = await Product.find(req.query, select).sort(sort).populate('category')
       if (!products) res.status(300).json('products not found')
@@ -30,46 +28,52 @@ router.get('/', async (req, res) => {
   } catch (err) {
     res.status(500).json(err)
   }
-})
+}
 
-router.get('/:title', async (req, res) => {
+const getProductByTitle = async (req, res) => {
   try {
     const { title } = req.params
-    const product = Product.findOne({ title })
+    const product = await Product.findOne({ title })
     if (!product) res.status(500).json('Product not found')
     res.status(200).json(product)
   } catch (err) {
     res.status(500).json(err)
   }
-})
+}
 
-router.put('/:id', async (req, res) => {
+const updatedProduct = async (req, res) => {
   try {
-    if (req.params.id === req.body.id) {
-      const updatedProduct = await Product.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body
-        },
+    const { id } = req.params
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body
+      },
 
-        {
-          new: true
-        }
-      )
-      res.status(200).json(updatedProduct)
-    }
+      {
+        new: true
+      }
+    )
+    res.status(200).json(updatedProduct)
   } catch (err) {
     res.status(500).json(err)
   }
-})
+}
 
-router.delete('/:id', async (req, res) => {
+const deleteProduct = async (req, res) => {
   try {
-    const deleted = await Product.findByIdAndDelete(req.params.id)
+    const { id } = req.params
+    const deleted = await Product.findByIdAndDelete(id)
     res.status(200).json(deleted)
   } catch (err) {
     res.status(500).json(err)
   }
-})
+}
 
-module.exports = router
+module.exports = {
+  createProduct,
+  getProduct,
+  getProductByTitle,
+  updatedProduct,
+  deleteProduct
+}

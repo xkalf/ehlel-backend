@@ -1,8 +1,7 @@
-const router = require('express').Router()
-const User = require('../models/User')
+const User = require('../../models/user.model')
 const bcrypt = require('bcrypt')
 
-router.put('/:id', async (req, res) => {
+const updateUser = async (req, res) => {
   if (req.body.userId === req.params.id) {
     if (req.body.password) {
       const salt = await bcrypt.genSalt(10)
@@ -25,9 +24,9 @@ router.put('/:id', async (req, res) => {
   } else {
     return res.status(400).json('You can only update your profile')
   }
-})
+}
 
-router.get('/:id', async (req, res) => {
+const getUserById = async (req, res) => {
   try {
     const { id } = req.params
     const user = await User.findById(id)
@@ -36,6 +35,9 @@ router.get('/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json(err)
   }
-})
+}
 
-module.exports = router
+module.exports = {
+  getUserById,
+  updateUser
+}
