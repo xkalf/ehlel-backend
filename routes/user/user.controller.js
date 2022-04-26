@@ -2,27 +2,24 @@ const User = require('../../models/user.model')
 const bcrypt = require('bcrypt')
 
 const updateUser = async (req, res) => {
-  if (req.body.userId === req.params.id) {
-    if (req.body.password) {
-      const salt = await bcrypt.genSalt(10)
-      req.body.password = await bcrypt.hash(req.body.password, salt)
-    }
-    try {
-      const updatedUser = await User.findByIdAndUpdate(
-        req.params.id,
-        {
-          $set: req.body
-        },
-        {
-          new: true
-        }
-      )
-      return res.status(200).json(updatedUser)
-    } catch (err) {
-      return res.status(500).json(err)
-    }
-  } else {
-    return res.status(400).json('You can only update your profile')
+  if (req.body.password) {
+    const salt = await bcrypt.genSalt(10)
+    req.body.password = await bcrypt.hash(req.body.password, salt)
+  }
+  try {
+    const { id } = req.params
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      {
+        $set: req.body
+      },
+      {
+        new: true
+      }
+    )
+    return res.status(200).json(updatedUser)
+  } catch (err) {
+    return res.status(500).json(err)
   }
 }
 
@@ -30,10 +27,10 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params
     const user = await User.findById(id)
-    if (!user) res.status(500).json('User not found')
-    res.status(200).json(user)
+    if (!user) return res.status(500).json('User not found')
+    return res.status(200).json(user)
   } catch (err) {
-    res.status(500).json(err)
+    return res.status(500).json(err)
   }
 }
 
