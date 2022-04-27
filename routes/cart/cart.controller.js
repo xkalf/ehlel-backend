@@ -13,16 +13,9 @@ const getCartById = async (req, res) => {
 
 const updateCart = async (req, res) => {
   try {
-    const { id } = req.params
-    const cart = Cart.findByIdAndUpdate(
-      id,
-      {
-        $set: req.body
-      },
-      {
-        new: true
-      }
-    )
+    const { user } = req.body
+    delete req.body.user
+    const cart = await Cart.findOneAndUpdate({ user }, req.body)
     return res.status(200).json(cart)
   } catch (err) {
     return res.status(500).json(err)
