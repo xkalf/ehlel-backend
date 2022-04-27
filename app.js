@@ -8,6 +8,8 @@ const ProductMonRoute = require('./routes/productmon/productmon.router')
 const CategoryRoute = require('./routes/category/category.router')
 const CartRoute = require('./routes/cart/cart.router')
 const UserRoute = require('./routes/user/user.router')
+const OrderRoute = require('./routes/order/order.router')
+const AddressRoute = require('./routes/address/address.router')
 
 const app = express()
 require('dotenv').config()
@@ -21,5 +23,7 @@ app.use('/productmon', ProductMonRoute)
 app.use('/category', CategoryRoute)
 app.use('/cart', CartRoute)
 app.use('/user', UserRoute)
+app.use('/order', OrderRoute)
+app.use('/address', AddressRoute)
 
 module.exports = app

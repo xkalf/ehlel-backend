@@ -1,5 +1,15 @@
 const Address = require('../../models/address.model')
 
+const getAddress = async (req, res) => {
+  try {
+    const addresses = await Address.find()
+    if (addresses) return res.status(200).json(addresses)
+    else return res.status(500).json('Addresses not found')
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 const getAddressById = async (req, res) => {
   try {
     const { id } = req.params
@@ -41,6 +51,7 @@ const updateAddress = async (req, res) => {
 }
 
 module.exports = {
+  getAddress,
   getAddressById,
   createAddress,
   updateAddress
