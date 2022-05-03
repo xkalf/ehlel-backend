@@ -9,9 +9,9 @@ const ProductSchema = new mongoose.Schema(
       required: true
     },
     priceUSD: { type: Number, required: true },
-    features: { type: String, required: true },
+    features: { type: String, required: false },
     description: [{ type: String }],
-    quantity: { type: Number, default: 0 },
+    quantity: { type: Number, default: 0, min: 0 },
     photos: [{
       type: String
     }]

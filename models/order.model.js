@@ -15,6 +15,10 @@ const OrderSchema = new mongoose.Schema({
   address: {
     type: mongoose.Schema.Types.ObjectId,
     required: true
+  },
+  point: {
+    type: Number,
+    default: 0
   }
 }, {
   invoice_id: { type: String, required: false },
