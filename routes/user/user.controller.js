@@ -1,6 +1,16 @@
 const User = require('../../models/user.model')
 const bcrypt = require('bcrypt')
 
+const getUser = async (req, res) => {
+  try {
+    const users = await User.find()
+    if (!users || users.length === 0) return res.status(500).json('users not found')
+    return res.status(200).json(users)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 const updateUser = async (req, res) => {
   if (req.body.password) {
     const salt = await bcrypt.genSalt(10)
@@ -36,5 +46,6 @@ const getUserById = async (req, res) => {
 
 module.exports = {
   getUserById,
-  updateUser
+  updateUser,
+  getUser
 }
