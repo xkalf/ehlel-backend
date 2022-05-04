@@ -4,7 +4,7 @@ const getCart = async (req, res) => {
   try {
     const carts = await Cart.find()
     if (!carts || carts.length === 0) return res.status(500).json('cart not found')
-    return req.status(200).json(carts)
+    return res.status(200).json(carts)
   } catch (error) {
     return res.status(500).json(error)
   }

@@ -10,6 +10,7 @@ const CartRoute = require('./routes/cart/cart.router')
 const UserRoute = require('./routes/user/user.router')
 const QpayRoute = require('./routes/qpay/qpay.router')
 const OrderRoute = require('./routes/order/order.router')
+const AddressRoute = require('./routes/address/address.router')
 const app = express()
 
 app.use(express.json())
@@ -23,5 +24,6 @@ app.use('/productmon', ProductMonRoute)
 app.use('/category', CategoryRoute)
 app.use('/cart', CartRoute)
 app.use('/user', UserRoute)
+app.use('/address', AddressRoute)
 
 module.exports = app
