@@ -4,7 +4,7 @@ const getAddressById = async (req, res) => {
   try {
     const { id } = req.params
     const address = await Address.findById(id)
-    if (!address) res.status(400).json('User not found')
+    if (!address) return res.status(400).json('User not found')
     return res.status(200).json(address)
   } catch (err) {
     return res.status(500).json(err)
@@ -34,6 +34,7 @@ const updateAddress = async (req, res) => {
         new: true
       }
     )
+    if (!updatedAddress) return res.status(500).json('cannot save address')
     return res.status(200).json(updatedAddress)
   } catch (err) {
     return res.status(500).json(err)
