@@ -41,8 +41,19 @@ const updateAddress = async (req, res) => {
   }
 }
 
+const getAddress = async (req, res) => {
+  try {
+    const addresses = await Address.find()
+    if (!addresses) return res.status(500).json('address not found')
+    return res.status(200).json(addresses)
+  } catch (error) {
+    return res.status(500).json(error)
+  }
+}
+
 module.exports = {
   getAddressById,
   createAddress,
-  updateAddress
+  updateAddress,
+  getAddress
 }
